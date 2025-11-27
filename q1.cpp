@@ -1,7 +1,6 @@
 /*Write program using functions for binary tree traversals: Pre-order, In-order and Post
 order using recursive approach.*/
 #include <iostream>
-#include<vector>
 using namespace std;
 class node //class to make a leaf node
 {
@@ -53,5 +52,6 @@ int main()
     cout<<endl<<"Tree after postorder"<<endl;
     postorder(root);
 }
+
 
 
