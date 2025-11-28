@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+
+int searchIn(vector<int> &in, int x){
+    for(int i=0;i<in.size();i++){
+        if(in[i] == x) return i;
+    }
+    return -1;
+}
+
+Node* buildTree(vector<int> &in, vector<int> &pre, int &idx, int l, int r){
+    if(l > r) return NULL;
+
+    Node* root = new Node(pre[idx++]);
+
+    if(l == r) return root;
+
+    int pos = searchIn(in, root->data);
+
+    root->left = buildTree(in, pre, idx, l, pos-1);
+    root->right = buildTree(in, pre, idx, pos+1, r);
+
+    return root;
+}
+
+int main(){
+    vector<int> inorder = {4,2,5,1,3};
+    vector<int> preorder = {1,2,4,5,3};
+
+    int idx = 0;
+    Node* root = buildTree(inorder, preorder, idx, 0, inorder.size()-1);
+
+    // just printing inorder to verify correctness
+    // should match original inorder
+    // simple inorder print
+    function<void(Node*)> ino = [&](Node* r){
+        if(!r) return;
+        ino(r->left);
+        cout << r->data << " ";
+        ino(r->right);
+    };
+
+    ino(root);
+}
